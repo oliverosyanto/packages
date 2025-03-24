@@ -114,6 +114,15 @@ public class WebViewClientProxyApi extends PigeonApiWebViewClient {
     @SuppressWarnings("deprecation")
     @Override
     public boolean shouldOverrideUrlLoading(@NonNull WebView view, @NonNull String url) {
+
+      if (url.startsWith("gcash://")) {
+          Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+          if (intent.resolveActivity(view.getContext().getPackageManager()) != null) {
+              view.getContext().startActivity(intent);
+          }
+          return true; // Prevent WebView from handling it
+      }
+
       api.getPigeonRegistrar()
           .runOnMainThread(() -> api.urlLoading(this, view, url, reply -> null));
       return returnValueForShouldOverrideUrlLoading;
@@ -213,6 +222,16 @@ public class WebViewClientProxyApi extends PigeonApiWebViewClient {
     @Override
     public boolean shouldOverrideUrlLoading(
         @NonNull WebView view, @NonNull WebResourceRequest request) {
+
+      String url = request.getUrl().toString();
+      if (url.startsWith("gcash://")) {
+          Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+          if (intent.resolveActivity(view.getContext().getPackageManager()) != null) {
+              view.getContext().startActivity(intent);
+          }
+          return true; // Prevent WebView from handling it
+      }
+
       api.getPigeonRegistrar()
           .runOnMainThread(() -> api.requestLoading(this, view, request, reply -> null));
 
@@ -224,6 +243,15 @@ public class WebViewClientProxyApi extends PigeonApiWebViewClient {
     @SuppressWarnings("deprecation")
     @Override
     public boolean shouldOverrideUrlLoading(@NonNull WebView view, @NonNull String url) {
+
+      if (url.startsWith("gcash://")) {
+          Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+          if (intent.resolveActivity(view.getContext().getPackageManager()) != null) {
+              view.getContext().startActivity(intent);
+          }
+          return true; // Prevent WebView from handling it
+      }
+
       api.getPigeonRegistrar()
           .runOnMainThread(() -> api.urlLoading(this, view, url, reply -> null));
       return returnValueForShouldOverrideUrlLoading;
