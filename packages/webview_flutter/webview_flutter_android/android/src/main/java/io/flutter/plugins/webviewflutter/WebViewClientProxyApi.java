@@ -18,6 +18,9 @@ import androidx.annotation.RequiresApi;
 import androidx.webkit.WebResourceErrorCompat;
 import androidx.webkit.WebViewClientCompat;
 
+import android.content.Intent;
+import android.net.Uri;
+
 /**
  * Host api implementation for {@link WebViewClient}.
  *
@@ -89,6 +92,16 @@ public class WebViewClientProxyApi extends PigeonApiWebViewClient {
     @Override
     public boolean shouldOverrideUrlLoading(
         @NonNull WebView view, @NonNull WebResourceRequest request) {
+
+      String url = request.getUrl().toString();
+      if (url.startsWith("gcash://")) {
+          Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+          if (intent.resolveActivity(view.getContext().getPackageManager()) != null) {
+              view.getContext().startActivity(intent);
+          }
+          return true; // Prevent WebView from handling it
+      }
+
       api.getPigeonRegistrar()
           .runOnMainThread(() -> api.requestLoading(this, view, request, reply -> null));
 
