@@ -95,17 +95,19 @@ public class WebViewClientProxyApi extends PigeonApiWebViewClient {
     @Override
     public boolean shouldOverrideUrlLoading(
         @NonNull WebView view, @NonNull WebResourceRequest request) {
-
       String url = request.getUrl().toString();
       if (url.startsWith("gcash://")) {
         Log.d(TAG, "Handle 'gcash' custom URL scheme");
         try {
+            Log.d(TAG, "Check GCash app...");
+            view.getContext().getPackageManager().getPackageInfo("com.globe.gcash.android", 0);
+
+            Log.d(TAG, "Open GCash app...");
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            Log.d(TAG, "Starting activity");
             view.getContext().startActivity(intent);
+
         } catch (Exception e) {
-            Log.e(TAG, "No app found to handle GCash URL: " + url);
-            // If GCash is NOT installed, open the Play Store
+            Log.d(TAG, "Open Play Store..." + e);
             Intent playStoreIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.globe.gcash.android"));
             view.getContext().startActivity(playStoreIntent);
         }
@@ -127,12 +129,15 @@ public class WebViewClientProxyApi extends PigeonApiWebViewClient {
       if (url.startsWith("gcash://")) {
         Log.d(TAG, "Handle 'gcash' custom URL scheme");
         try {
+            Log.d(TAG, "Check GCash app...");
+            view.getContext().getPackageManager().getPackageInfo("com.globe.gcash.android", 0);
+
+            Log.d(TAG, "Open GCash app...");
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            Log.d(TAG, "Starting activity");
             view.getContext().startActivity(intent);
+
         } catch (Exception e) {
-            Log.e(TAG, "No app found to handle GCash URL: " + url);
-            // If GCash is NOT installed, open the Play Store
+            Log.d(TAG, "Open Play Store..." + e);
             Intent playStoreIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.globe.gcash.android"));
             view.getContext().startActivity(playStoreIntent);
         }
@@ -241,12 +246,15 @@ public class WebViewClientProxyApi extends PigeonApiWebViewClient {
       if (url.startsWith("gcash://")) {
         Log.d(TAG, "Handle 'gcash' custom URL scheme");
         try {
+            Log.d(TAG, "Check GCash app...");
+            view.getContext().getPackageManager().getPackageInfo("com.globe.gcash.android", 0);
+
+            Log.d(TAG, "Open GCash app...");
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            Log.d(TAG, "Starting activity");
             view.getContext().startActivity(intent);
+
         } catch (Exception e) {
-            Log.e(TAG, "No app found to handle GCash URL: " + url);
-            // If GCash is NOT installed, open the Play Store
+            Log.d(TAG, "Open Play Store..." + e);
             Intent playStoreIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.globe.gcash.android"));
             view.getContext().startActivity(playStoreIntent);
         }
@@ -267,12 +275,15 @@ public class WebViewClientProxyApi extends PigeonApiWebViewClient {
       if (url.startsWith("gcash://")) {
         Log.d(TAG, "Handle 'gcash' custom URL scheme");
         try {
+            Log.d(TAG, "Check GCash app...");
+            view.getContext().getPackageManager().getPackageInfo("com.globe.gcash.android", 0);
+
+            Log.d(TAG, "Open GCash app...");
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-            Log.d(TAG, "Starting activity");
             view.getContext().startActivity(intent);
+
         } catch (Exception e) {
-            Log.e(TAG, "No app found to handle GCash URL: " + url);
-            // If GCash is NOT installed, open the Play Store
+            Log.d(TAG, "Open Play Store..." + e);
             Intent playStoreIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.globe.gcash.android"));
             view.getContext().startActivity(playStoreIntent);
         }
