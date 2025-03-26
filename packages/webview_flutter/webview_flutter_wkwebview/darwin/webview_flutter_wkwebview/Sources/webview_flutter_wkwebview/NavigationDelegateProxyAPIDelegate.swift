@@ -83,6 +83,26 @@ public class NavigationDelegateImpl: NSObject, WKNavigationDelegate {
       _ webView: WKWebView, decidePolicyFor navigationAction: WebKit.WKNavigationAction,
       decisionHandler: @escaping @MainActor (WebKit.WKNavigationActionPolicy) -> Void
     ) {
+      guard let url = navigationAction.request.url else {
+        decisionHandler(.allow)
+        return
+      }
+      let urlString = url.absoluteString
+      // Handle "gcash://" URL scheme
+      if urlString.starts(with: "gcash://") {
+        if UIApplication.shared.canOpenURL(url) {
+          // Open GCash app if installed
+          UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
+          // Redirect to GCash on the App Store if not installed
+          if let appStoreURL = URL(string: "itms-apps://apps.apple.com/app/id520020791") {
+            UIApplication.shared.open(appStoreURL, options: [:], completionHandler: nil)
+          }
+        }
+        decisionHandler(.allow)
+        return
+      }
+
       registrar.dispatchOnMainThread { onFailure in
         self.api.decidePolicyForNavigationAction(
           pigeonInstance: self, webView: webView, navigationAction: navigationAction
@@ -120,6 +140,26 @@ public class NavigationDelegateImpl: NSObject, WKNavigationDelegate {
       _ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction,
       decisionHandler: @escaping (WKNavigationActionPolicy) -> Void
     ) {
+      guard let url = navigationAction.request.url else {
+        decisionHandler(.allow)
+        return
+      }
+      let urlString = url.absoluteString
+      // Handle "gcash://" URL scheme
+      if urlString.starts(with: "gcash://") {
+        if UIApplication.shared.canOpenURL(url) {
+          // Open GCash app if installed
+          UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
+          // Redirect to GCash on the App Store if not installed
+          if let appStoreURL = URL(string: "itms-apps://apps.apple.com/app/id520020791") {
+            UIApplication.shared.open(appStoreURL, options: [:], completionHandler: nil)
+          }
+        }
+        decisionHandler(.allow)
+        return
+      }
+
       registrar.dispatchOnMainThread { onFailure in
         self.api.decidePolicyForNavigationAction(
           pigeonInstance: self, webView: webView, navigationAction: navigationAction
