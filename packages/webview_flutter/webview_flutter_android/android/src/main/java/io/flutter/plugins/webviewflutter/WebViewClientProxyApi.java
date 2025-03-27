@@ -99,8 +99,8 @@ public class WebViewClientProxyApi extends PigeonApiWebViewClient {
       if (url.startsWith("gcash://")) {
         Log.d(TAG, "Handle 'gcash' custom URL scheme");
         try {
-            Log.d(TAG, "Check GCash app...");
-            view.getContext().getPackageManager().getPackageInfo("com.globe.gcash.android", 0);
+            // Log.d(TAG, "Check GCash app...");
+            // view.getContext().getPackageManager().getPackageInfo("com.globe.gcash.android", 0);
 
             Log.d(TAG, "Open GCash app...");
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
